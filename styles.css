@@ -1,0 +1,252 @@
+::selection {background-color: #00a8f3;}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #191a2e;
+    font-family: "Roboto Mono", monospace, sans-serif;
+    color: white;
+}
+
+.nav-links {
+    color: rgb(155, 155, 155);
+    text-decoration: none;
+    margin: 0 60px;
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    margin: 50px 0 50px 0;
+}
+
+.dropdown {
+    width: 160px;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    height: 50px;;
+}
+
+.dropdown-content {
+    opacity: 0;
+    display: none;
+    position: absolute;
+    min-width: 150px;
+    z-index: 1;
+    background-color: #131424;
+    padding: 5px;
+    height: 100px;
+    border-radius: 5px;
+    top: 50px;
+    transition: opacity 0.2s ease;
+    
+}
+
+.dropdown-content a {
+    color: white;
+    filter: brightness(60%);
+    text-decoration: none;
+    display: block;
+    height: 40%;
+    margin: 10px 0 0 0;
+    font-weight: 400;
+}
+.dropdown-content a:hover {
+    filter: brightness(100%);
+}
+
+.dropdown:hover .dropdown-content {opacity: 1; display: block;}
+
+
+.nav-element-container {
+    display: inline-block;
+    font-size: 20px;
+}
+
+.nav-links:hover {
+    color: white;
+}
+
+.separator {
+    width: 1px;
+    border-color: rgb(155, 155, 155);
+    animation: hranimation 1.5s forwards cubic-bezier(0.1, 0.1, 0.3, 0.95);
+}
+
+@keyframes hranimation {
+    100% {
+        width: 1450px;
+    }
+}
+.index-section-container {
+    text-align: center;
+}
+.index-main {
+    margin: 120px 0 0 0;
+}
+.index-title {
+    font-size: 62px;
+    margin-bottom: 30px;
+}
+.index-section-container a {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+
+}
+.index-section-container a div{
+    padding: 17px 25px;
+    background-color: rgb(199, 196, 0);
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.index-section-container a div:hover{
+    background-color: rgb(160, 157, 0);
+}
+
+.preview-container {
+    display: inline-block;
+    width: 500px;
+    background-color: #131424;
+    height: 450px;
+    box-shadow: 1px 1px 10px 1px rgb(8, 8, 8);
+    cursor: pointer;
+    margin: 20px 20px;
+    animation: fadeup 1s forwards
+}
+
+.preview-container1{animation:fadeup 0.7s forwards}
+.preview-container2{animation:fadeup 1.3s forwards}
+.preview-container3{animation:fadeup 1s forwards}
+
+@keyframes fadeup {
+    from { transform:translateY(30px);}
+    to { transform: rotateX(0deg);}
+}
+
+
+
+.index-pages-preview-container {
+    text-align: center;
+    margin: 100px 0 150px 0;
+}
+
+.preview-container h2 {
+    margin: 40px 0 0 0;
+    font-weight: 400;
+}
+
+.hover-container {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.hover-container:hover {
+    transform: scale(1.005);
+}
+
+
+
+footer ul {
+    margin: 0;
+}
+
+footer .bottomtxt p {
+    text-align: center;
+    color: #ffffff79;
+    margin: 10px 0 50px 0;
+    font-weight: 300;
+    font-size: 12px;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer .icons li {
+    display: inline-block;
+    padding: 0 10px 0 10px;
+    filter: brightness(50%);
+}
+
+footer .icons {
+    margin: 50px auto 0 auto;
+    text-align: center;
+
+}
+
+footer .icons img:hover {
+    cursor: pointer;
+
+}
+
+.index-tile-link {
+    color: white;
+}
+
+img.logo {
+    filter: brightness(50%);
+    width: 50px;
+    position: absolute;
+    left: 50px;
+    top: 30px;
+    transition: filter 0.2s ease;
+    cursor: pointer;
+}
+
+img.logo:hover {
+    filter: brightness(100%);
+}
+
+#teacherEmail {display: none;}
+
+.sorting-container {
+    width: 1200px;
+    display: inline-block;
+    padding: 50px;
+    text-align: center;
+}
+.cards-container {
+    width: 300px;
+    display: inline-block;
+}
+
+#bar-container {
+    height: 600px;
+    background-color: #131424;
+    padding-bottom: 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+    font-size: 0; /* Removes whitespace between bars */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+}
+
+
+.options-container {
+    text-align: center;
+}
+
+.bar {
+    background-color: #00a8f3;
+    display: inline-block;
+    transition: transform 0.5s ease;
+}
+
+.bar:hover {
+    transform: scale(1.02);
+}
+
+input[type='range'] {
+    vertical-align: bottom;
+}
