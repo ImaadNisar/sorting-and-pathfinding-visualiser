@@ -240,7 +240,7 @@ img.logo:hover {
 .bar {
     background-color: #00a8f3;
     display: inline-block;
-    transition: transform 0.5s ease;
+    transition: transform 0.2s ease;
 }
 
 .bar:hover {

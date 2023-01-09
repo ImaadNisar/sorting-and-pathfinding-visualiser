@@ -52,7 +52,7 @@ function customBars() {
 
     //VERIFY INPUT HERE USING REGEX
     if (custom.length > 0) {  // and regex valid
-        var barSizes = custom.split(",")
+        var barSizes = custom.split(",").filter(Boolean) // removes whitespace character at end of string
         var numberOfBars = barSizes.length
 
         for (i=0; i<numberOfBars; i++) {
@@ -96,3 +96,42 @@ function startSorting() {
         }
     }
 }
+
+
+// REUSABLE FILES ---------------
+function move(bar, direction) {
+    var curTransformStr = bar.style.transform
+    var curTransformVal = parseInt(curTransformStr.replace(/[^0-9-]/g, ""))
+
+    if (direction == "right") {
+        curTransformVal += 110
+        bar.style.transform = "translateX("+curTransformVal+"%)"
+    }else {
+        curTransformVal -= 110
+        bar.style.transform = "translateX("+curTransformVal+"%)"
+    }
+    
+}
+
+// test function
+// function outputBars(bars) {  
+//     arr = []
+//     for (i=0; i<bars.length; i++) {
+//         arr.push(bars[i].style.height)
+//     }
+//     console.log(arr)
+// }
+
+
+function setInitTransform(bars) {
+    for (i=0; i<bars.length; i++) {
+        bars[i].style.transform = "translateX(0%)"
+    }
+}
+
+function resetBarColor(bars) {
+    for (j=0; j<bars.length; j++) {
+        bars[j].style.backgroundColor = "#00a8f3"
+    }
+}
+// REUSABLE FILES -----------------

@@ -17,7 +17,7 @@
 
 
         <label for="speed">Speed:</label>
-        <input type="range" min="0.25" max="5" step="0.25" name="speed" value="1" id="speed">
+        <input type="range" min="0.25" max="10" step="0.25" name="speed" value="1" id="speed">
         <div>
             <input type="button" onclick="updateBars()" value="Randomize" id="random">
             <span>or</span>
@@ -41,6 +41,7 @@
 
 </main>
 
+<script src="sorting/insertion-sort.js"></script>
 <script src="sorting/bubble-sort.js"></script>
 <script src="sorting/sorting.js"></script>
 
