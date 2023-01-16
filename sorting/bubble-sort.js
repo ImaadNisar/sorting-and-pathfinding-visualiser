@@ -32,11 +32,8 @@ function bubbleSort(bars, speed) {
     //     }
     // }
 
-    var curIndex = 0
     var length = bars.length - 1
-    bubbleSortRecursive(bars, speed, curIndex, length)
-
-    
+    bubbleSortRecursive(bars, speed, 0, length)
 
 }
 
