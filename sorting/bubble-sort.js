@@ -71,6 +71,7 @@ function bubbleSortRecursive(bars, speed, curIndex, length) {
         curIndex = 0
         return setTimeout(bubbleSortRecursive, 800/speed, bars, speed, curIndex, length)
     }else{
+        checkAll(bars, 0)
         document.getElementById('algorithm').disabled = false
         document.getElementById('size').disabled = false
         document.getElementById('speed').disabled = false

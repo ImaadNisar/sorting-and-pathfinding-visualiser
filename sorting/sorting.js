@@ -135,3 +135,13 @@ function resetBarColor(bars) {
     }
 }
 // REUSABLE FILES -----------------
+
+function checkAll(bars, i) {
+    if (i<bars.length) {
+        bars[i].style.backgroundColor = "green"
+        i++
+        setTimeout(checkAll, 100, bars, i)
+    } 
+    return true
+    
+}
