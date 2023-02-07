@@ -18,17 +18,17 @@ function mergeSortRecursive(bars, speed, listOfBars, index) {
             index = 0
         }
 
-        merged = []
         jointLists = listOfBars[index].concat(listOfBars[index+1])
-        newlist = merge(listOfBars[index], listOfBars[index+1], counter=0, merged, jointLists)
+
+        newlist = merge(listOfBars[index], listOfBars[index+1], counter=0, merged=[], jointLists)
         listOfBars[index] = newlist
         listOfBars.splice(index, 1)
-        index++
 
+        index++
         mergeSortRecursive(bars, speed, listOfBars, index)
         
             
-    } else {return}
+    } else {return} // end of sort
 }
 
 function merge(list1, list2, counter, merged, jointLists) {
@@ -60,19 +60,39 @@ function merge(list1, list2, counter, merged, jointLists) {
         list2.splice(0, 1)
     }
 
-    swapMergeBars(pushedItems, counter)
+    swapMergeBars(pushedItems, counter, jointLists)
         
     
     
-    setTimeout(merge, 400, list1, list2, index1, index2, counter, merged)
+    setTimeout(merge, 400, list1, list2, counter, merged, jointLists)
 
 }
 
-function swapMergeBars(pushedItems, counter) {
+function swapMergeBars(pushedItems, counter, jointLists) {
     if (pushedItems.length != 0) {
-        difference =  // difference between item at counter and pushedItem (translateX multiplier)
+        pushedItemIndex = jointLists.indexOf(pushedItems[0])
+        difference =  Math.abs(pushedItemIndex-counter) 
+        // pushed item will always be on the right hand 
+        // side therefore we can get absolute value and ignore direction
 
+
+        var curTransformStr = bar.style.transform
+        var curTransformVal = parseInt(curTransformStr.replace(/[^0-9-]/g, ""))
+
+        if (direction == "right") {
+            curTransformVal += 110
+            bar.style.transform = "translateX("+curTransformVal+"%)"
+        }else {
+            curTransformVal -= 110
+            bar.style.transform = "translateX("+curTransformVal+"%)"
+        }
+
+
+        pushedItems.splice(0,1)
         
         counter ++
+        
     }
+
+    return counter
 }
