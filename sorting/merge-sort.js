@@ -20,7 +20,7 @@ function mergeSortRecursive(bars, speed, listOfBars, index) {
 
         jointLists = listOfBars[index].concat(listOfBars[index+1])
 
-        newlist = merge(listOfBars[index], listOfBars[index+1], counter=0, merged=[], jointLists)
+        newlist = merge(listOfBars[index], listOfBars[index+1], counter=0, merged=[], jointLists) // could use await
         listOfBars[index] = newlist
         listOfBars.splice(index, 1)
 
@@ -33,7 +33,7 @@ function mergeSortRecursive(bars, speed, listOfBars, index) {
 
 function merge(list1, list2, counter, merged, jointLists) {
     if (list1.length == 0 || list2.length == 0) {
-        // do something
+        return merged
     }
     
     val1 = parseInt(list1[0].style.height.slice(0, list1[0].style.height.length-2))
@@ -60,39 +60,46 @@ function merge(list1, list2, counter, merged, jointLists) {
         list2.splice(0, 1)
     }
 
-    swapMergeBars(pushedItems, counter, jointLists)
+    counter, jointLists = swapMergeBars(pushedItems, counter, jointLists)
         
-    
-    
-    setTimeout(merge, 400, list1, list2, counter, merged, jointLists)
+    setTimeout(merge, 500*pushedItems.length, list1, list2, counter, merged, jointLists)
 
 }
 
 function swapMergeBars(pushedItems, counter, jointLists) {
     if (pushedItems.length != 0) {
-        pushedItemIndex = jointLists.indexOf(pushedItems[0])
-        difference =  Math.abs(pushedItemIndex-counter) 
+        rightItem = pushedItems[0]
+        leftItem = jointLists[counter]
+
+        rightItemIndex = jointLists.indexOf(rightItem)
+        difference =  Math.abs(rightItemIndex-counter) 
         // pushed item will always be on the right hand 
         // side therefore we can get absolute value and ignore direction
 
 
-        var curTransformStr = bar.style.transform
-        var curTransformVal = parseInt(curTransformStr.replace(/[^0-9-]/g, ""))
+        // 110 pixels is the amount to translate 1 bars width therefore, must be multiplied
+        var rightItemTransformStr = rightItem.style.transform
+        var rightItemTransformVal = parseInt(rightItemTransformStr.replace(/[^0-9-]/g, ""))
+        rightItemTransformVal -= 110*difference
+        rightItem.style.transform = "translateX("+rightItemTransformVal+"%)"
 
-        if (direction == "right") {
-            curTransformVal += 110
-            bar.style.transform = "translateX("+curTransformVal+"%)"
-        }else {
-            curTransformVal -= 110
-            bar.style.transform = "translateX("+curTransformVal+"%)"
-        }
+        var leftItemTransformStr = leftItem.style.transform
+        var leftItemTransformVal = parseInt(leftItemTransformStr.replace(/[^0-9-]/g, ""))
+        leftItemTransformVal += 110*difference
+        leftItem.style.transform = "translateX("+leftItemTransformVal+"%)"
 
+        // swaps the position of items in the jointLists array
+        jointLists[counter] = rightItem
+        jointLists[rightItemIndex] = leftItem
 
         pushedItems.splice(0,1)
-        
         counter ++
-        
-    }
 
-    return counter
+        return setTimeout(swapMergeBars, 400, pushedItems, counter, jointLists)
+        
+        
+    }else {
+        return counter, jointLists
+
+    }
 }
