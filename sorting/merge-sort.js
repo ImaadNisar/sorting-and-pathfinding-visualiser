@@ -12,27 +12,45 @@ function mergeSort(bars, speed) {
     mergeSortRecursive(bars, speed, listOfBars , 0)
 }
 
-function mergeSortRecursive(bars, speed, listOfBars, index) {
+async function mergeSortRecursive(bars, speed, listOfBars, index) {
     if (listOfBars.length != 1) {
         if (index == listOfBars.length - 1) {
             index = 0
         }
 
         jointLists = listOfBars[index].concat(listOfBars[index+1])
+        
+        newlist = await merge(listOfBars[index], listOfBars[index+1], counter=0, merged=[], jointLists) // could use await
+        
 
-        newlist = merge(listOfBars[index], listOfBars[index+1], counter=0, merged=[], jointLists) // could use await
-        listOfBars[index] = newlist
-        listOfBars.splice(index, 1)
+        listOfBars.splice(index, 2, newlist)
+
+        console.log(listOfBars[0])
 
         index++
-        mergeSortRecursive(bars, speed, listOfBars, index)
+        setTimeout(mergeSortRecursive, 400, bars, speed, listOfBars, index)
         
             
     } else {return} // end of sort
 }
 
-function merge(list1, list2, counter, merged, jointLists) {
+async function merge(list1, list2, counter, merged, jointLists) {
     if (list1.length == 0 || list2.length == 0) {
+        if (list1.length == 0) {
+            pushedItems=list2
+            for (i=0;i<list2.length;i++) {
+                merged.push(list2[i])
+            }
+        }
+        else if (list2.length == 0) {
+            pushedItems=list1
+            for (i=0;i<list1.length;i++) {
+                merged.push(list1[i])
+            }
+        }
+
+
+        counter, jointLists = swapMergeBars(pushedItems, counter, jointLists)
         return merged
     }
     

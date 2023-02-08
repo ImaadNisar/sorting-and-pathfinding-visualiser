@@ -140,7 +140,7 @@ function checkAll(bars, i) {
     if (i<bars.length) {
         bars[i].style.backgroundColor = "green"
         i++
-        setTimeout(checkAll, 100, bars, i)
+        setTimeout(checkAll, 20, bars, i)
     } 
     return true
     
