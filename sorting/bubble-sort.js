@@ -1,37 +1,4 @@
 function bubbleSort(bars, speed) {
-    setInitTransform(bars)
-
-    // Iterative method
-    // var swapped = true
-    // var length = bars.length
-    // while (swapped && length > 0) {
-    //     swapped = false
-    //     length --
-    //     for (i=0; i<length; i++) {
-    //         var curVal = parseInt(bars[i].style.height.slice(0, bars[i].style.height.length-2))
-    //         var nextVal = parseInt(bars[i+1].style.height.slice(0, bars[i+1].style.height.length-2))
-
-    //         bars[i].style.backgroundColor = "green"
-    //         bars[i+1].style.backgroundColor = "yellow"
-            
-
-    //         if (curVal > nextVal) {
-    //             move(bars[i], "right")
-    //             move(bars[i+1], "left")
-                
-    //             var temp = bars[i]
-    //             bars[i] = bars[i+1]
-    //             bars[i+1] = temp
-
-    //             swapped = true
-    //         }
-    //         resetBarColor(bars)
-            
-
-    //         //HERE
-    //     }
-    // }
-
     var length = bars.length - 1
     bubbleSortRecursive(bars, speed, 0, length)
 
@@ -71,11 +38,6 @@ function bubbleSortRecursive(bars, speed, curIndex, length) {
         curIndex = 0
         return setTimeout(bubbleSortRecursive, 800/speed, bars, speed, curIndex, length)
     }else{
-        checkAll(bars, 0)
-        document.getElementById('algorithm').disabled = false
-        document.getElementById('size').disabled = false
-        document.getElementById('speed').disabled = false
-        document.getElementById('random').disabled = false
-        document.getElementById('custom').disabled = false
+        checkAll(bars)
     }
 }

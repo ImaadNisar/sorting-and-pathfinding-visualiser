@@ -1,6 +1,4 @@
 function insertionSort(bars, speed) {
-    setInitTransform(bars)
-
     insertionSortRecursive(bars, speed, 1, 1)
 
 }
@@ -8,12 +6,7 @@ function insertionSort(bars, speed) {
 function insertionSortRecursive(bars, speed, index1, index2) {
     resetBarColor(bars)
     if (index1 == bars.length) { // base case
-        checkAll(bars, 0)
-        document.getElementById('algorithm').disabled = false
-        document.getElementById('size').disabled = false
-        document.getElementById('speed').disabled = false
-        document.getElementById('random').disabled = false
-        document.getElementById('custom').disabled = false
+        checkAll(bars)
         return
     }
     if (index2 > 0) {

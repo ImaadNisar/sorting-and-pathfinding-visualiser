@@ -41,6 +41,7 @@
 
 </main>
 
+<script src="sorting/quick-sort.js"></script>
 <script src="sorting/merge-sort.js"></script>
 <script src="sorting/insertion-sort.js"></script>
 <script src="sorting/bubble-sort.js"></script>

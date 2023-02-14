@@ -84,6 +84,8 @@ function startSorting() {
         bars = Array.from(barsHTML)
 
         var algorithm = document.getElementById('algorithm').value
+
+        setInitTransform(bars)
         
         if (algorithm == "Bubble Sort") {
             bubbleSort(bars, speed)
@@ -113,15 +115,6 @@ function move(bar, direction) {
     
 }
 
-// test function
-// function outputBars(bars) {  
-//     arr = []
-//     for (i=0; i<bars.length; i++) {
-//         arr.push(bars[i].style.height)
-//     }
-//     console.log(arr)
-// }
-
 
 function setInitTransform(bars) {
     for (i=0; i<bars.length; i++) {
@@ -129,19 +122,26 @@ function setInitTransform(bars) {
     }
 }
 
+
 function resetBarColor(bars) {
     for (j=0; j<bars.length; j++) {
         bars[j].style.backgroundColor = "#00a8f3"
     }
 }
-// REUSABLE FILES -----------------
 
-function checkAll(bars, i) {
+
+function checkAll(bars, i=0) {
     if (i<bars.length) {
         bars[i].style.backgroundColor = "green"
         i++
-        setTimeout(checkAll, 20, bars, i)
-    } 
-    return true
-    
+        setTimeout(checkAll, 800/bars.length, bars, i)
+    }else{
+        document.getElementById('algorithm').disabled = false
+        document.getElementById('size').disabled = false
+        document.getElementById('speed').disabled = false
+        document.getElementById('random').disabled = false
+        document.getElementById('custom').disabled = false
+        return true
+    }
 }
+// REUSABLE FILES -----------------
