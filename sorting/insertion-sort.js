@@ -15,6 +15,7 @@ function insertionSortRecursive(bars, speed, index1, index2) {
         var prevVal = parseInt(bars[index2-1].style.height.slice(0, bars[index2-1].style.height.length-2))
 
         bars[index2].style.backgroundColor = "green"
+        bars[index2-1].style.backgroundColor = 'yellow'
 
         if (curVal < prevVal) {
 

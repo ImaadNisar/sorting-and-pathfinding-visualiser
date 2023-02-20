@@ -1,5 +1,13 @@
 ::selection {background-color: #00a8f3;}
 
+main {
+    animation: load 1s ease forwards
+}
+
+@keyframes load {
+    from {opacity: 0}
+    to {opacity: 1}
+}
 
 body {
     margin: 0;
@@ -197,7 +205,7 @@ img.logo {
     width: 50px;
     position: absolute;
     left: 50px;
-    top: 30px;
+    top: -10px;
     transition: filter 0.2s ease;
     cursor: pointer;
 }
@@ -249,4 +257,125 @@ img.logo:hover {
 
 input[type='range'] {
     vertical-align: bottom;
+}
+
+.pathfinding-grid-input-container {
+    text-align: center;
+    margin-top: 30px
+}
+
+.pathfinding-grid-graph-container {
+    width: 75%;
+    height: 700px;
+    display: inline-block;
+    margin: 30px 0;
+    position: relative;
+    pointer-events: none;
+}
+
+
+
+.pathfinding-grid-main {
+    text-align: center;
+}
+
+.row {
+    display: block;
+    width: 100%;
+    height: 5.26%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+.vertex {
+    box-sizing: border-box;
+    width: 2.5%;
+    border: 2px #191a2e solid;
+    display: inline-block;
+    height: 100%;
+    transition: background-color ease 0.1s, transform ease-out 0.2s;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+
+.vertex:hover {
+    transform: scale(1.2);
+}
+
+.normal {
+    background-color: #131424;
+}
+.wall {
+    background-color: #00a8f3;
+}
+
+html,body {
+    overflow:auto;
+    height: 100%;
+}
+
+header {position:relative}
+
+#wrapper {
+    overflow-x: hidden;
+    overflow-y: scroll!important;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    opacity: 0.7;
+    z-index: 5;
+    display: none;
+}
+
+#info-container {
+    display: none;
+    margin: auto;
+    position: absolute;
+    top: 22vh;
+    left: 25vw;
+    width: 900px;
+    height: 600px;
+    background-color: whitesmoke;
+    border-radius: 15px;
+    z-index: 6;
+}
+
+#info-exit {
+    position:absolute;
+    right: 15px;
+    top: 15px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-image: url("images/exit.png");
+    background-position: center;
+    background-size: 40px;
+    background-repeat: no-repeat;
+}
+
+.start {
+    background-image: url(images/start.png);
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #131424;
+
+}
+
+.end {
+    background-image: url(images/end.png);
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #131424;
+
 }

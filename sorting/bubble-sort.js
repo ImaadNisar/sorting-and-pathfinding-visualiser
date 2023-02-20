@@ -14,6 +14,7 @@ function bubbleSortRecursive(bars, speed, curIndex, length) {
         var nextVal = parseInt(bars[curIndex+1].style.height.slice(0, bars[curIndex+1].style.height.length-2))
 
         bars[curIndex].style.backgroundColor = "green"
+        bars[curIndex+1].style.backgroundColor = 'yellow'
 
         if (curVal > nextVal) {
             setTimeout(move, 400/speed, bars[curIndex], "right")  // moves the bars visually
