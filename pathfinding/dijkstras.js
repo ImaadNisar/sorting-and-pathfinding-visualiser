@@ -1,4 +1,4 @@
-function dijkstras(graph, speed) {
+async function dijkstras(graph, speed) {
     start = graph.vertices.filter(vertex => vertex.type == 'start')[0]
     end = graph.vertices.filter(vertex => vertex.type == 'end')[0]
     graph.vertices.forEach((vertex) => {
@@ -8,7 +8,10 @@ function dijkstras(graph, speed) {
     start.distanceFromStart = 0
 
     while (graph.vertices.filter(vertex => vertex.visited == false && vertex.type != 'wall').length != 0) {
-        current = getCurrent(graph)
+        current = dijkstrasGetCurrent(graph)
+        if (current == null) break
+        document.getElementById(current.id).style.backgroundColor = 'green'
+        if (current.type == 'end') break
 
         current.neighbours.forEach(id => {
             vertex = graph.vertices.filter(vertex => vertex.id == id)[0]
@@ -19,18 +22,17 @@ function dijkstras(graph, speed) {
             }
         })
 
+        await new Promise(resolve => setTimeout(() => {
+            resolve()
+        }, 50/speed)) 
+
     }
-    
-    id = end.id
-    while (id != start.id) {
-        vertex = graph.vertices.filter(vertex => vertex.id == id)[0]
-        element = document.getElementById(id)
-        element.style.backgroundColor = 'darkBlue'
-        id = vertex.previous
-    } 
+
+    await highlightPath(graph)
+    disableOptions(false)
 }
 
-function getCurrent(graph) {
+function dijkstrasGetCurrent(graph) {
     current = null
     unvisited = graph.vertices.filter(vertex => vertex.visited == false && vertex.type != 'wall')
     distance = Infinity
@@ -40,6 +42,10 @@ function getCurrent(graph) {
             current = vertex
         }
     })
+
+    if (distance == Infinity) {
+        return null
+    }
 
     current.visited = true
     return current

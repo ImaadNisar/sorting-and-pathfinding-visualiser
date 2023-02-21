@@ -16,7 +16,7 @@ function stopClicking() {
 function changeWall(id, clicked=false) {
     if (clicking || clicked) {
 
-        element = document.getElementById(id)
+        var element = document.getElementById(id)
 
         if (element.getAttribute('type') == 'normal') {
             element.className = "vertex unvisited wall"
@@ -34,44 +34,41 @@ function changeWall(id, clicked=false) {
 
 
 function infoOpen() {
-    element = document.getElementById('wrapper')
-    element.style.display = "block"
-    element = document.getElementById('info-container')
-    element.style.display = "inline-block"
+    document.getElementById('wrapper').style.display = "block"
+    document.getElementById('info-container').style.display = "inline-block"
 }
 
 
 function infoClose() {
-    element = document.getElementById('wrapper')
-    element.style.display = "none"
-    element = document.getElementById('info-container')
-    element.style.display = "none"
+    document.getElementById('wrapper').style.display = "none"
+    document.getElementById('info-container').style.display = "none"
 }
 
 
 function startGrid() {
-    algorithmElement = document.getElementById('algorithm')
-    speedElement = document.getElementById('speed')
-    startBtn = document.getElementById('start')
+    disableOptions(true)
 
-    algorithm = algorithmElement.value
-    speed = speedElement.value
+    var algorithmElement = document.getElementById('algorithm')
+    var speedElement = document.getElementById('speed')
 
-    algorithmElement.disabled = true
-    speedElement.disabled = true
-    startBtn.disabled = true
+    var algorithm = algorithmElement.value
+    var speed = speedElement.value
 
-    vertices = document.querySelectorAll('.vertex')
+    var vertices = document.querySelectorAll('.vertex')
     
-    graphArray = getGraph(vertices)
+    var graphArray = getGraph(vertices)
 
     const graph = new Graph()
     graph.addVertices(graphArray)
 
+    resetColor(graph)
+
     if (algorithm == 'dijkstras') {
         dijkstras(graph, speed)
-    }else {
-        astar(graph, speed)
+    }else if (algorithm == 'astarE') {
+        astar(graph, speed, 'E')
+    } else if (algorithm == 'astarM') {
+        astar(graph, speed, 'M')
     }
 }
 
@@ -110,9 +107,9 @@ function Graph() {
 
                 if (graph[rowIndex][vertexIndex].getAttribute('type') != 'wall'){
 
-                    if (0<vertexIndex) { //after 1st column
-                        if (graph[rowIndex][vertexIndex-1].getAttribute('type') != 'wall'){
-                            neighbours.push(graph[rowIndex][vertexIndex-1].id)
+                    if (0<rowIndex) { // after 1st row
+                        if (graph[rowIndex-1][vertexIndex].getAttribute('type') != 'wall'){
+                            neighbours.push(graph[rowIndex-1][vertexIndex].id)
                         }
                     }
                     if (vertexIndex<graph[rowIndex].length-1) { // before last column
@@ -120,17 +117,17 @@ function Graph() {
                             neighbours.push(graph[rowIndex][vertexIndex+1].id)
                         }
                     }
-                    if (0<rowIndex) { // after 1st row
-                        if (graph[rowIndex-1][vertexIndex].getAttribute('type') != 'wall'){
-                            neighbours.push(graph[rowIndex-1][vertexIndex].id)
-                        }
-                    }
                     if (rowIndex<graph.length-1) { // before last row
                         if (graph[rowIndex+1][vertexIndex].getAttribute('type') != 'wall'){
                             neighbours.push(graph[rowIndex+1][vertexIndex].id)
                         }
                     }
-
+                    if (0<vertexIndex) { //after 1st column
+                        if (graph[rowIndex][vertexIndex-1].getAttribute('type') != 'wall'){
+                            neighbours.push(graph[rowIndex][vertexIndex-1].id)
+                        }
+                    }
+                    
                 }
 
                 let id = graph[rowIndex][vertexIndex].id
@@ -142,3 +139,56 @@ function Graph() {
 
 }
 
+async function highlightPath(graph) {
+    end = graph.vertices.filter(vertex => vertex.type == 'end')[0]
+
+    if (end.previous == null) {
+        graph.vertices.filter(vertex => vertex.type != 'wall' && vertex.visited != true).forEach(vertex => {
+            document.getElementById(vertex.id).style.transition = 'background-color ease 2s'
+            document.getElementById(vertex.id).style.backgroundColor = 'red'
+        })
+        setTimeout(()=>{
+            graph.vertices.filter(vertex => vertex.type != 'wall' && vertex.visited != true).forEach(vertex => {
+                document.getElementById(vertex.id).style.transition = 'background-color ease 0.1s'
+            })
+        },1000)
+
+    } else {
+
+        //declare variables
+        var vertex = end
+        path = []
+
+        // create list of vertices in path
+        path.push(vertex.id)
+        while (vertex.previous != null) {
+            vertex = graph.vertices.filter(v => v.id == vertex.previous)[0]
+            path.push(vertex.id)
+        }
+        path.reverse()
+
+        // color each vertex and add delay
+        for (i=0; i<path.length; i++) {
+            document.getElementById(path[i]).style.backgroundColor = 'darkBlue'
+            await new Promise(resolve => setTimeout(() => {
+                resolve()
+            }, 50)) 
+        }
+
+    }
+}
+
+function disableOptions(disable) {
+    algorithmElement = document.getElementById('algorithm')
+    speedElement = document.getElementById('speed')
+    startBtn = document.getElementById('start')
+    algorithmElement.disabled = disable
+    speedElement.disabled = disable
+    startBtn.disabled = disable
+}
+
+function resetColor(graph) {
+    graph.vertices.filter(vertex => vertex.type != 'wall').forEach(vertex => {
+        document.getElementById(vertex.id).style.backgroundColor = '#131424'
+    })
+}

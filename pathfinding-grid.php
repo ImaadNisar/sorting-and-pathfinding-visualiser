@@ -9,8 +9,9 @@
 <section class="pathfinding-grid-input-container">
     <label for="algorithm">Algorithm:</label>
     <select name="algorithm" id="algorithm">
-        <option value="dijkstras">Dijkstra's Shortest Path</option>
-        <option value="astar">A* Shortest Path</option>
+        <option value="dijkstras">Dijkstra's Pathfinding</option>
+        <option value="astarE">A* Pathfinding (Euclidean)</option>
+        <option value="astarM">A* Pathfinding (Manhattan)</option>
     </select>
     <label for="speed">Speed:</label>
     <input type="range" name="speed" id="speed" min="0.25" max="10" step="0.25" value="1">
@@ -52,6 +53,7 @@
 
 </main>
 
+<script src="pathfinding/astar.js"></script>
 <script src="pathfinding/dijkstras.js"></script>
 <script src="pathfinding/pathfinding.js"></script>
 

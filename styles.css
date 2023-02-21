@@ -294,7 +294,7 @@ input[type='range'] {
     border: 2px #191a2e solid;
     display: inline-block;
     height: 100%;
-    transition: background-color ease 0.1s, transform ease-out 0.2s;
+    transition: background-color ease 0.1s, transform ease-out 0.2s, filter ease 0.2s;
     -webkit-user-drag: none;
     user-select: none;
     -moz-user-select: none;
@@ -305,6 +305,7 @@ input[type='range'] {
 
 .vertex:hover {
     transform: scale(1.2);
+    filter: brightness(85%)
 }
 
 .normal {
@@ -337,15 +338,17 @@ header {position:relative}
 
 #info-container {
     display: none;
-    margin: auto;
     position: absolute;
-    top: 22vh;
-    left: 25vw;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
     width: 900px;
     height: 600px;
     background-color: whitesmoke;
     border-radius: 15px;
     z-index: 6;
+    top: 20vh
 }
 
 #info-exit {

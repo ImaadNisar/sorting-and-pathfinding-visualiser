@@ -1,8 +1,8 @@
 async function mergeSort(bars, speed) {
     resetBarColor(bars)
 
-    index=0
-    listOfBars =[]
+    var index=0
+    var listOfBars =[]
 
     for (i=0; i<bars.length; i++) {
         listOfBars.push([bars[i]])
@@ -13,9 +13,9 @@ async function mergeSort(bars, speed) {
             index = 0
         }
         
-        oldList = listOfBars[index].concat(listOfBars[index+1])
+        var oldList = listOfBars[index].concat(listOfBars[index+1])
 
-        newList = merge(listOfBars[index], listOfBars[index+1])
+        var newList = merge(listOfBars[index], listOfBars[index+1])
 
         listOfBars.splice(index, 2, newList)
 
@@ -34,8 +34,8 @@ function swapMerge(bars, speed, oldList, newList, curIndex=0) {
     return new Promise(resolve => 
         loop = setInterval(() => {
 
-            oldIndex = oldList.indexOf(newList[curIndex])
-            difference =  Math.abs(oldIndex-curIndex) 
+            var oldIndex = oldList.indexOf(newList[curIndex])
+            var difference =  Math.abs(oldIndex-curIndex) 
 
             var newItem = oldList[oldIndex]
             var oldItem = oldList[curIndex]
@@ -61,7 +61,7 @@ function swapMerge(bars, speed, oldList, newList, curIndex=0) {
 
             }},400/speed)
         
-            temp = oldList[curIndex]
+            var temp = oldList[curIndex]
             oldList[curIndex] = newList[curIndex]
             oldList[oldIndex] = temp
         
@@ -79,16 +79,16 @@ function swapMerge(bars, speed, oldList, newList, curIndex=0) {
 
 function merge(list1, list2) { // start merge function
     // declare index variables and final merged list
-    index1 = 0 
-    index2 = 0
-    merged = []
+    var index1 = 0 
+    var index2 = 0
+    var merged = []
 
     // conditional iteration
     while (index1<list1.length && index2<list2.length) {
 
         // obtains height value of bars for comparison
-        val1 = parseInt(list1[index1].style.height.slice(0, list1[index1].style.height.length-2))
-        val2 = parseInt(list2[index2].style.height.slice(0, list2[index2].style.height.length-2))
+        var val1 = parseInt(list1[index1].style.height.slice(0, list1[index1].style.height.length-2))
+        var val2 = parseInt(list2[index2].style.height.slice(0, list2[index2].style.height.length-2))
 
         //compares height values and pushes smallest bars to merged 
         if (val1 > val2) {
