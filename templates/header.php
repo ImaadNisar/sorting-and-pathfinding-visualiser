@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +16,7 @@
     <header>
         <nav>
         <a href="index.php"><img src="images/logo.png" alt="V" class="logo"></a>
+
         <ul class="nav-list">
             <a href="sorting.php" class="nav-links"><div class="nav-element-container"><li>Sort It</li></div></a><!--
             --><div class="nav-element-container nav-links dropdown">
@@ -24,9 +26,25 @@
                     <a href="pathfinding-map.php">Map</a>
                 </div>
             </div><!--
-            --><a href="login-page.php" class="nav-links"><div class="nav-element-container"><li>Login/Register</li></div></a>
-            <!-- ACCOUNT INCLUDE HERE -->
+            -->
+            <?php
+            if (isset($_SESSION['loggedin'])) {
+                echo("<a href='accounts/logout.php' class='nav-links'><div class='nav-element-container'><li>Log out</li></div></a>");
+            }else {
+                echo("<a href='login-page.php' class='nav-links'><div class='nav-element-container'><li>Login/Register</li></div></a>");
+            }
+            ?>
         </ul>
+        
+        <?php
+        if (isset($_SESSION['loggedin'])) {
+            echo '
+            <a href="account.php">
+                <div class="account-button"></div>
+            </a>
+            ';
+        }
+        ?>
         </nav>
     <hr class="separator">
     </header>

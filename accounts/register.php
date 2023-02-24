@@ -1,4 +1,5 @@
 <?php 
+session_start();
 
 include("../templates/dbconnect.php");
 
@@ -28,14 +29,14 @@ function addAccount($conn, $query, $teacherExists) {
                 mysqli_stmt_bind_param($stmt, "sssss", $_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['password'], $_POST['teacherEmail']);
             }
             else {
-                header("Location: ../register-page.php?error=Teacher+with+that+account+does+not+exist");
+                header("Location: ../register-page.php?error=3"); // handle error
             }
         }else{  // otherwise add the teacher details
             mysqli_stmt_bind_param($stmt, "ssss", $_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['password']);
         }
         mysqli_stmt_execute($stmt);  // execute the statement
-        header("Location: ../index.php?register=Account+successfully+created");
-        
+        header("Location: ../register-page.php?success=1"); // handle successful account creation
+        exit;
     }
 }
 
@@ -54,6 +55,45 @@ function teacherExists($conn) {
     }
 }
 
+function validateEmail($email) {
+    return preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $email);
+}
+
+function validateName($name) {
+    return strlen($name) > 0;
+}
+
+function validatePasswords($pass1, $pass2=null) {
+    if ($pass2!=null) {
+        if ($pass1 != $pass2) {
+            return false;
+        }
+    }
+    return strlen($pass1) >= 8;
+}
+
+function validate() {
+    $valid = true;
+    if ($teacherExists) {
+        if (!validateEmail($_POST['teacherEmail'])) {
+            $valid = false;
+        }
+    }
+    if(!(validateName($_POST['firstName']) && validateName($_POST['lastName']) && validateEmail($_POST['email']) && validatePasswords($_POST['password']))) {
+        $valid = false;
+    }
+
+    if (!$valid) {
+        header("Location: ../register-page.php?error=2");
+        exit;
+    }
+    
+
+}
+
+
+
+// starts here
 $teacherExists = false;
 if ($_POST['userType'] == "student") {  // constructs sql query for student
     $query = "INSERT INTO students(firstName, lastName, studentEmail, password) VALUES (?, ?, ?, ?)";
@@ -68,11 +108,18 @@ if ($_POST['userType'] == "student") {  // constructs sql query for student
 $studentQuery = "SELECT * FROM students WHERE studentEmail=?";
 $teacherQuery = "SELECT * FROM teachers WHERE teacherEmail=?";
 
+
+validate($teacherExists);
+
 if (!(accountExists($conn, $studentQuery) || accountExists($conn, $teacherQuery))) {
     addAccount($conn, $query, $teacherExists);
 }else {
-    header("Location: ../register-page.php?error=Account+already+exists.");
+    header("Location: ../register-page.php?error=1"); // handle account already existing
 }
 
+// error 1 = Account already exists
+// error 2 = Invalid input(s)
+// error 3 = Teacher with that account does not exist
+// success 1 = Account created
 
 ?>

@@ -13,5 +13,6 @@
     </footer>
 
 
+<script src="accounts/time-spent.js"></script>
 </body>
 </html>

@@ -1,20 +1,28 @@
-<?php include("templates/header.php"); ?>
+<?php require("templates/header.php");?>
 
-<?php 
-if (isset($_GET['error'])) {
-    echo $_GET['error'];
-}
-?>
-
-<main>
-<h1>Login to Visualize It</h1>
-<a href="register-page.php">Don't have an account?</a>
-<form action="accounts/login.php" method="post">
-    <input type="text" name="email" id="email" placeholder="Email address">
-    <input type="password" name="password" id="password" placeholder="Password">
-    <div class="showPasswordLogin" onclick="changeType('password')">Show password</div>
-    <input type="submit" name="submit" id="submit" value="Login">
-</form>
+<main class="account-main">
+<section class="account-container">
+    <h1>Login to Visualize It</h1>
+    <a href="register-page.php" class="account-redirect-link">Don't have an account?</a>
+    <?php 
+    if (isset($_GET['error'])) {
+        if ($_GET['error'] == 1) {
+            echo "<div class='error'>Account does not exist</div>";
+        }
+        elseif ($_GET['error'] == 2) {
+            echo "<div class='error'>Invalid input</div>";
+        };
+    }
+    ?>
+    <form onsubmit="return validateLogin()"action="accounts/login.php" method="post" class="account-form login-form" spellcheck="false">
+        <input type="text" name="email" id="email" placeholder="Email address" class="login-email">
+        <div class="password-container">
+            <input type="password" name="password" id="password" placeholder="Password" onfocus="showButton('password')" onblur="hideButton('password')">
+            <div class="showPasswordButton" onclick="changeType('password')" id="passwordButton" onmouseover="stopLoseFocus('password')" onmouseleave="continueLoseFocus('password')"></div>
+        </div>
+        <input type="submit" name="submit" id="submit" value="Login">
+    </form>
+</section>
 </main>
 
 <script src="accounts/account-forms.js"></script>

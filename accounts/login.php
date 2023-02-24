@@ -19,17 +19,48 @@ function accountMatch($conn, $query) {
     }
 }
 
+function validateEmail($email) {
+    return preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $email);
+}
+
+
+function validatePasswords($pass1, $pass2=null) {
+    if ($pass2!=null) {
+        if ($pass1 != $pass2) {
+            return false;
+        }
+    }
+    return strlen($pass1) >= 8;
+}
+
+function validate() {
+    $valid = true;
+    
+    if (!(validateEmail($_POST['email']) && validatePasswords($_POST['password']))) {$valid=false;}
+
+    if (!$valid) {
+        header("Location: ../login-page.php?error=2");
+        exit;
+    }
+
+}
+
+validate();
+
 $queries = array("student"=>"SELECT * FROM Students WHERE (studentEmail=? AND password=?)", "teacher"=>"SELECT * FROM Teachers WHERE (teacherEmail=? AND password=?)");
 
 foreach ($queries as $type => $query) {
     if (accountMatch($conn, $query)) {
         $_SESSION['email'] = $_POST['email'];
         $_SESSION['type'] = $type;
-        header("Location: ../index.php");
+        $_SESSION['loggedin'] = true;
+        header("Location: ../index.php?success=1");
         exit;
     }
 }
-header("Location: ../login-page.php?error=Account+not+found");
+header("Location: ../login-page.php?error=1");
 
+// error 1 = Account not found
+// error 2 = Invalid input
 
 ?>

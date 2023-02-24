@@ -1,4 +1,4 @@
-<?php include("templates/header.php"); ?>
+<?php require("templates/header.php"); ?>
 
 <div id="wrapper"></div>
 <div id="info-container">

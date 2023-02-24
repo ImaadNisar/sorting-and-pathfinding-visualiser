@@ -1,9 +1,28 @@
-<?php include("templates/header.php") ?>
+<?php require("templates/header.php");?>
+
+<script>
+var logged = '<?php echo "".($_GET['success']).""; ?>';
+var type = '<?php echo "".$_SESSION['type'].""?>';
+
+if (type == 'student') {
+    if (logged == "1") {
+        sessionStorage.setItem('time', 0);
+    }
+    else if (logged == "2") {
+        sessionStorage.removeItem('time');
+    }
+}
+
+</script>
 
 <main class="index-main">
     <section class="index-section-container">
         <h1 class="index-title">Visualize It</h1>
-        <a href="register-page.php"><div class="index-get-started-button">Create an account</div></a>
+        <?php
+        if(!isset($_SESSION['loggedin'])) {
+            echo '<a href="register-page.php"><div class="index-get-started-button">Create an account</div></a>';
+        }
+        ?>
     </section>
     <section class="index-pages-preview-container">
         <div class="hover-container"><a href="sorting.php" class="index-tile-link"><article class="index-sort-preview-container preview-container preview-container1">
@@ -20,10 +39,12 @@
         </article></a></div>
 
     </section>
-
+    
+    
 
 
 </main>
 
 
-<?php include("templates/footer.php") ?>
+
+<?php include("templates/footer.php"); ?>
