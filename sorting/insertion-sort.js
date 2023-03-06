@@ -3,24 +3,36 @@ function insertionSort(bars, speed) {
 
 }
 
-function insertionSortRecursive(bars, speed, index1, index2) {
-    resetBarColor(bars)
+async function insertionSortRecursive(bars, speed, index1, index2) {
+    desc("insertion", "endcheck", undefined, [index1, bars.length])
+    await delay(speed)
     if (index1 == bars.length) { // base case
+        resetBarColor(bars)
         checkAll(bars)
         return
     }
+
+    
     if (index2 > 0) {
 
         var curVal = parseInt(bars[index2].style.height.slice(0, bars[index2].style.height.length-2))
         var prevVal = parseInt(bars[index2-1].style.height.slice(0, bars[index2-1].style.height.length-2))
 
-        bars[index2].style.backgroundColor = "green"
-        bars[index2-1].style.backgroundColor = 'yellow'
+        resetBarColor(bars)
+        bars[index2].style.background = "green"
+        bars[index2-1].style.background = 'yellow'
+
+        desc("insertion", "indexcheck", undefined, [index2, undefined])
+        await delay(speed)
+
+        desc("insertion", "compare", [curVal, prevVal])
 
         if (curVal < prevVal) {
 
-            setTimeout(move, 400/speed, bars[index2], "left")
-            setTimeout(move, 400/speed, bars[index2-1], "right")
+            setTimeout(move, 1000*speed, bars[index2], "left")
+            setTimeout(move, 1000*speed, bars[index2-1], "right")
+
+            setTimeout(desc, 1000*speed, "insertion", "swap")
 
             var curID = bars[index2].id
             bars[index2].id = bars[index2-1].id
@@ -36,10 +48,11 @@ function insertionSortRecursive(bars, speed, index1, index2) {
             index1 ++
             index2 = index1
         }
-        return setTimeout(insertionSortRecursive, 800/speed, bars, speed, index1, index2, length)
+        return setTimeout(insertionSortRecursive, 2000*speed, bars, speed, index1, index2, length)
     } else {
         index1 ++
         index2 = index1
-        return setTimeout(insertionSortRecursive, 800/speed, bars, speed, index1, index2, length)
+        return setTimeout(insertionSortRecursive, 2000*speed, bars, speed, index1, index2, length)
     }
+
 }

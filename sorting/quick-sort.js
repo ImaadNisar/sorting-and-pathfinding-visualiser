@@ -1,12 +1,11 @@
 async function quickSort(bars, speed) {
     bars = await quickSortRecursive(bars, speed, bars)
+    resetBarColor(bars)
     checkAll(bars)
 }
 
 
 async function quickSortRecursive(bars, speed, arr) {
-    resetBarColor(bars)
-
     if (arr.length <= 1) {
         return arr
     }else {
@@ -14,7 +13,7 @@ async function quickSortRecursive(bars, speed, arr) {
         var pivot = arr.length-1
 
         while (pointer != pivot) {
-            resetBarColor(bars)
+
             if (
                 (parseInt(arr[pointer].style.height.slice(0, arr[pointer].style.height.length-2)) > 
                 parseInt(arr[pivot].style.height.slice(0, arr[pivot].style.height.length-2))
@@ -28,14 +27,17 @@ async function quickSortRecursive(bars, speed, arr) {
                 var bar2 = arr[pivot]
 
                 setTimeout(function() {
-                    bar1.style.backgroundColor = 'green'
-                    bar2.style.backgroundColor = 'yellow'
+                    desc("quick", "setindexes", undefined, [pointer, pivot])
+                    resetBarColor(bars)
+                    bar1.style.background = 'green'
+                    bar2.style.background = 'yellow'
                     if (pivot==pointer) {
-                        arr[pivot].style.backgroundColor = 'orange'
+                        arr[pivot].style.background = 'orange'
                     }
-                }, 400/speed)
+                }, 1000*speed)
 
                 await new Promise(resolve => setTimeout(() => {
+                    desc("quick", "swap")
                     var difference = pointer - pivot
             
                     var bar2TransformStr = bar2.style.transform
@@ -49,7 +51,7 @@ async function quickSortRecursive(bars, speed, arr) {
                     bar1.style.transform = "translateX("+bar1TransformVal+"%)"
                     
                     resolve()
-                }, 800/speed))
+                }, 2000*speed))
 
                 // swap items
                 var temp = arr[pointer]
@@ -61,47 +63,34 @@ async function quickSortRecursive(bars, speed, arr) {
                 pointer = pivot
                 pivot = tempPointer
             }
-
+            var update = null
             if (pointer < pivot) {
                 pointer++
+                update = "increment"
             }else {
                 pointer--
+                update = "decrement"
             }
             await new Promise(resolve => setTimeout(() => {
+                desc("quick", "updatepointer", undefined, [update, undefined])
                 resetBarColor(bars)
-                arr[pivot].style.backgroundColor = 'yellow'
-                arr[pointer].style.backgroundColor = 'green'
+                arr[pivot].style.background = 'yellow'
+                arr[pointer].style.background = 'green'
 
                 if (pivot==pointer) {
-                    arr[pivot].style.backgroundColor = 'orange'
+                    arr[pivot].style.background = 'orange'
                 }
 
                 resolve()
-            }, 400/speed))
-
+            }, 1000*speed))
             await new Promise(resolve => setTimeout(() => {
                 resolve()
-            }, 400/speed)) 
-
+            }, 1000*speed)) 
         }
         
         var left = await quickSortRecursive(bars, speed, arr.slice(0,pointer))
         var right = await quickSortRecursive(bars, speed, arr.slice(pointer+1,arr.length))
 
         return left.concat([arr[pointer]], right)
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -20,11 +20,10 @@ async function mergeSort(bars, speed) {
         listOfBars.splice(index, 2, newList)
 
         await swapMerge(bars, speed, oldList, newList)
-        resetBarColor(bars)
         index++
         
     }
-
+    resetBarColor(bars)
     bars = listOfBars[0]
     checkAll(bars)
 }
@@ -42,12 +41,16 @@ function swapMerge(bars, speed, oldList, newList, curIndex=0) {
 
             resetBarColor(bars)
             for (i=0;i<newList.length;i++) {
-                newList[i].style.backgroundColor = "darkBlue"
+                newList[i].style.background = "darkBlue"
             }
-            newItem.style.backgroundColor = 'green'
+            newItem.style.background = 'green'
+            var value = parseInt(newItem.style.height.slice(0, newItem.style.height.length-2))/20
+            desc("merge", "selectsmallest", undefined, [value, undefined])
 
             setTimeout(() => {
             if (difference!=0) {
+
+                desc("merge", "movesmallest", undefined, [value, curIndex])
 
                 var newItemTransformStr = newItem.style.transform
                 var newItemTransformVal = parseInt(newItemTransformStr.replace(/[^0-9-]/g, ""))
@@ -59,7 +62,13 @@ function swapMerge(bars, speed, oldList, newList, curIndex=0) {
                 oldItemTransformVal += 110*difference
                 oldItem.style.transform = "translateX("+oldItemTransformVal+"%)"
 
-            }},400/speed)
+            }else {
+                desc("merge", "inplace",)
+            }
+        
+        
+            },1000*speed)
+            
         
             var temp = oldList[curIndex]
             oldList[curIndex] = newList[curIndex]
@@ -67,14 +76,16 @@ function swapMerge(bars, speed, oldList, newList, curIndex=0) {
         
             curIndex++
             if (curIndex == newList.length) {
-
                 resolve()
                 clearInterval(loop)
             }
-
-        }, 800/speed)
+            
+        }, 1000*speed)
     )
 }
+
+
+
 
 
 function merge(list1, list2) { // start merge function
