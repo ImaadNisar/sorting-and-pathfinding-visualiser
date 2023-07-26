@@ -1,21 +1,22 @@
 function bubbleSort(bars, speed) {
-    var length = bars.length - 1
-    bubbleSortRecursive(bars, speed, 0, length, false)
+    var length = bars.length - 1 // calculate length
+    bubbleSortRecursive(bars, speed, 0, length, false) // first function call
 
 }
 
 
 
 async function bubbleSortRecursive(bars, speed, curIndex, length, swapped) {
-    desc("bubble", "endcheck", undefined, [curIndex, length])
-    await delay(speed)
-    resetBarColor(bars)
+    desc("bubble", "endcheck", undefined, [curIndex, length]) // calls descriptions
+    await delay(speed) // description delay
+    resetBarColor(bars) // reset bar colors
     if (curIndex < length) {
         // compare cur and next
         var curVal = parseInt(bars[curIndex].style.height.slice(0, bars[curIndex].style.height.length-2))
         var nextVal = parseInt(bars[curIndex+1].style.height.slice(0, bars[curIndex+1].style.height.length-2))
 
-        bars[curIndex].style.background = "green"
+        // set bar styles
+        bars[curIndex].style.background = "lime"
         bars[curIndex+1].style.background = 'yellow'
 
         desc("bubble", "compare", [curVal, nextVal])
@@ -35,6 +36,7 @@ async function bubbleSortRecursive(bars, speed, curIndex, length, swapped) {
             var temp = bars[curIndex]
             bars[curIndex] = bars[curIndex+1]
             bars[curIndex+1] = temp
+            // call function again
             return setTimeout(bubbleSortRecursive, 2000*speed, bars, speed, curIndex+1, length, swapped)
         }else {
             return setTimeout(bubbleSortRecursive, 1000*speed, bars, speed, curIndex+1, length, swapped)
@@ -43,13 +45,14 @@ async function bubbleSortRecursive(bars, speed, curIndex, length, swapped) {
         
     }
 
-    desc("bubble", "lengthcheck", undefined, [length, swapped])
+    desc("bubble", "lengthcheck", undefined, [length, swapped]) 
     await delay(speed)
-    if (length > 0 && swapped) {
+    if (length > 0 && swapped) {  // call function again as end of pass reached
+        // update indexes
         length--
         curIndex = 0
         return setTimeout(bubbleSortRecursive, 1000*speed, bars, speed, curIndex, length, false)
     }else{
-        checkAll(bars)
+        checkAll(bars)  // algorithm finished
     }
 }

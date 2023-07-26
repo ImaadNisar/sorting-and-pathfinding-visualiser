@@ -6,29 +6,32 @@ async function astar(graph, speed, heuristic) {
         vertex.previous = null
     })
 
-    var open = []
+    // define initial 
+    var open = []  
     var closed = []
     var start = graph.vertices.filter(vertex => vertex.type == 'start')[0]
     var end = graph.vertices.filter(vertex => vertex.type == 'end')[0]
 
-    start.g = 0
+    start.g = 0  // set start distance to 0
 
-    if (heuristic == "M") {
+    if (heuristic == "M") {  // call relevant heuristic
         start.h = calculateManhattan(start, end)
     } else if (heuristic == "E") {
         start.h = calculateEuclidean(start, end)
     }
     
-    start.f = start.h + start.g
+    start.f = start.h + start.g  // f = g + h
 
     var current = start
-    while (current != end) {
-        document.getElementById(current.id).style.backgroundColor = 'green'
+    while (current != end) { // iterate until end reached
+        document.getElementById(current.id).style.backgroundColor = 'green' // show cell as searched
 
-        for (var i=0;i<current.neighbours.length;i++) {
-            var neighbour = graph.vertices.filter(vertex => vertex.id==current.neighbours[i])[0]
-            if (closed.filter(vertex => vertex.id==current.neighbours[i]).length == 0 && open.filter(vertex => vertex.id==current.neighbours[i]).length == 0) {
-                open.push(neighbour)
+        for (var i=0;i<current.neighbours.length;i++) {  // go to all current neightbours (not visited)
+            var neighbour = graph.vertices.filter(vertex => vertex.id==current.neighbours[i])[0]  // obtain neight object
+            if (closed.filter(vertex => vertex.id==current.neighbours[i]).length == 0 && open.filter(vertex => vertex.id==current.neighbours[i]).length == 0) { // check if neighbour already in close or open
+                open.push(neighbour) // add neighbour to open
+
+                // calculate new g, h, f values for neighbour
                 var g = current.g + 1
 
                 if (heuristic == "M") {
@@ -39,7 +42,7 @@ async function astar(graph, speed, heuristic) {
 
                 var f = g + neighbour.h
                 
-                if (neighbour.f == null) {
+                if (neighbour.f == null) {  //replace neighbour f if optimal
                     neighbour.f = f
                     neighbour.g = g
                     neighbour.previous = current.id
@@ -54,29 +57,30 @@ async function astar(graph, speed, heuristic) {
         }
 
         current.visited = true
-        closed.push(current)
+        closed.push(current)  // add current to closed
 
-        if (open.length == 0) {
+        if (open.length == 0) {  // once no more options to traverse exit (no path)
             break
         }
 
-        current = aStarGetCurrent(open)
+        // gets new current from shortest of open
+        current = aStarGetCurrent(open)  
         var currentIndex = open.indexOf(current)
         open.splice(currentIndex, 1)
-
         
 
         await new Promise(resolve => setTimeout(() => {
             resolve()
-        }, 50/speed)) 
+        }, 50/speed)) // delay 
     
     }
     
+    // set current attributes and styling
     current.visited = true
     document.getElementById(current.id).style.backgroundColor = 'green'
-    await highlightPath(graph)
-    disableOptions(false)
-
+    await highlightPath(graph)  // highlights path
+    disableOptions(false)  // enables options
+    // end
 }
 
 
@@ -89,9 +93,11 @@ function calculateManhattan(start, end) {
     var endY = parseInt(end.id.split(" ")[0])
     var endX = parseInt(end.id.split(" ")[1])
 
+    //calculates absolute x and y difference between vertices
     x = Math.abs(startX-endX)
     y = Math.abs(startY-endY)
 
+    // returns sum of two lengths (manhatatn)
     return x+y
 }
 
@@ -102,9 +108,11 @@ function calculateEuclidean(start, end) {
     var endY = parseInt(end.id.split(" ")[0])
     var endX = parseInt(end.id.split(" ")[1])
 
+    // calculates absolute x and y difference between vertices
     x = Math.abs(startX-endX)
     y = Math.abs(startY-endY)
 
+    // returns hypotenuse of two lengths (euclidean)
     return Math.sqrt((x*x)+(y*y))
 }
 
@@ -113,7 +121,7 @@ function aStarGetCurrent(arr) {
     var lowestFVertex = null
     var lowestF = Infinity
 
-    arr.forEach(vertex => {
+    arr.forEach(vertex => {  // linear search to obtain smallest f valued object in open
         if (vertex.f < lowestF) {
             lowestFVertex = vertex
             lowestF = vertex.f

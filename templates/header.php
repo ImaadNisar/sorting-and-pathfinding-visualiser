@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); // start session on every page?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +28,7 @@
             </div><!--
             -->
             <?php
-            if (isset($_SESSION['loggedin'])) {
+            if (isset($_SESSION['loggedin'])) { // replace login button with logout if user is logged in
                 echo("<a href='accounts/logout.php' class='nav-links'><div class='nav-element-container'><li>Log out</li></div></a>");
             }else {
                 echo("<a href='login-page.php' class='nav-links'><div class='nav-element-container'><li>Login/Register</li></div></a>");
@@ -37,7 +37,7 @@
         </ul>
         
         <?php
-        if (isset($_SESSION['loggedin'])) {
+        if (isset($_SESSION['loggedin'])) { // add account button if user if logged in
             echo '
             <a href="account.php">
                 <div class="account-button"></div>

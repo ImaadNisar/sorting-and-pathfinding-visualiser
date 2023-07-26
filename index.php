@@ -1,10 +1,11 @@
 <?php require("templates/header.php");?>
 
 <script>
+// define logged and type
 var logged = '<?php echo "".($_GET['success']).""; ?>';
 var type = '<?php echo "".$_SESSION['type'].""?>';
 
-if (type == 'student') {
+if (type == 'student') { // begin timer if user is a student
     if (logged == "1") {
         sessionStorage.setItem('time', 0);
     }
@@ -20,7 +21,7 @@ if (type == 'student') {
         <h1 class="index-title">Visualize It</h1>
         <?php
         if(!isset($_SESSION['loggedin'])) {
-            echo '<a href="register-page.php"><div class="index-get-started-button">Create an account</div></a>';
+            echo '<a href="register-page.php"><div class="index-get-started-button">Create an account</div></a>'; // remove create account button if logged in
         }
         ?>
     </section>

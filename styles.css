@@ -163,7 +163,6 @@ body {
 }
 
 
-
 footer ul {
     margin: 0;
 }
@@ -274,14 +273,19 @@ input[type='range'] {
 
 .pathfinding-grid-input-container {
     text-align: center;
-    margin-top: 30px
+    margin: 30px 0;
+    background-color: #131424;
+    border-radius: 25px;
+    padding: 30px 10px;
+    display: inline-block;
+    width: 700px;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.164);
 }
 
 .pathfinding-grid-graph-container {
     width: 75%;
     height: 700px;
     display: inline-block;
-    margin: 30px 0;
     position: relative;
     pointer-events: none;
 }
@@ -358,10 +362,11 @@ header {position:relative}
     margin-right: auto;
     width: 900px;
     height: 600px;
-    background-color: whitesmoke;
+    background-color: white;
     border-radius: 15px;
     z-index: 6;
-    top: 20vh
+    top: 20vh;
+    color: grey
 }
 
 #info-exit {
@@ -686,7 +691,7 @@ input[value="Login"] {
     font-size: 16px;
     font-weight: 300;
     color: grey;
-    transition: 0.5s ease transform;
+    transition: 0.1s ease transform;
 }
 
 
@@ -720,11 +725,11 @@ input[value="Login"] {
 }
 
 .sorting-right-container {
-    width: 450px;
-    height: 200px;
+    width: 500px;
     display: inline-block;
     vertical-align: top;
-    padding: 0 50px;
+    padding-left: 20px;
+    position: relative;
 }
 
 #english-text {
@@ -745,9 +750,9 @@ input[value="Login"] {
     font-weight: 500;
 }
 
-.g {color: green}
+.g {color: lime}
 .y {color: yellow}
-.b {color: darkblue}
+.b {color: blue}
 
 .top-span {
     margin: 5px 20px 20px ;
@@ -880,3 +885,140 @@ input, select {
     background-color: #111220;
 }
 
+.psuedocode-tile-container {
+    border-radius: 25px;
+    background-color: #131424;
+    width: 100%;
+    display: inline-block;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.164);
+    color: grey;
+}
+
+.psuedocode-tile-container h1 {
+    text-align: center;
+    font-weight: 200;
+    margin: 30px;
+    color: white;
+    
+}
+.psuedocode-tile-container hr{width: 90%;border-top: none; border-bottom: grey 0.5px solid;}
+
+#pseudocode-container {
+    margin-left: 30px;
+    display: inline-block;
+    width: 440px;
+    margin-bottom: 30px;
+}
+
+#pseudocode-container p {
+    margin: 3px;
+    font-size: 16px;
+    font-weight: 600;
+    /* background-color: #1cb5fc5b;
+    color: whitesmoke; */
+    padding: 2px 5px;
+}
+
+.function {
+    color: #569CD7
+}
+
+.pathfinding-option-container {
+    float: left;
+    margin-left: 40px;
+    color: grey;
+    
+}
+
+.pathfinding-speed-container input {
+    width: 200px;
+    margin-top: 5px;
+}
+
+
+.pathfinding-algorithm-container select {
+    width: 300px
+}
+
+.pathfinding-button-container {
+    margin: 30px auto;
+    padding: 30px 0;
+    width: 400px;
+    background-color: #131424;
+    display: block;
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.164);
+    color: grey;
+    height: 50px
+}
+.pathfinding-button-container * {
+    cursor: pointer;
+}
+
+.howtouse {
+    background-color: #191a2e;
+    padding: 15px 20px;
+    border-radius: 10px;
+    float: left;
+    margin-left: 30px;
+    margin-right: 60px;
+}
+.pathfinding-button-container input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: 5px 10px;
+
+}
+
+#pathfinding-start {
+    background-image: url('images/play.png');
+    background-position: center;
+    background-size: 40px;
+    background-repeat: no-repeat;
+}
+
+#pathfinding-clear {
+    background-image: url('images/clear.png');
+    background-position: center;
+    background-size: 40px;
+    background-repeat: no-repeat;
+}
+
+#info-container article {
+    width: 400px;
+    margin: 20px 50px 10px;
+    display: inline-block;
+}
+
+.article1 {
+    margin-top: 80px !important;
+}
+
+#info-container article h2 {
+    margin-top: 0;
+}
+
+#info-container img {
+    vertical-align: top;
+    margin-top: 70px;
+    margin-left: 70px;
+}
+
+.articles {
+    display: inline-block;
+    width: 50%;
+}
+
+.pathfinding-grid {
+    text-align: center;
+    height: 400px;
+}
+.pathfinding-grid h1{
+    font-size: 62px;
+    margin-top: 250px;
+    
+}

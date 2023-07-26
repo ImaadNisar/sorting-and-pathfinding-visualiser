@@ -40,7 +40,7 @@ function addAccount($conn, $query, $teacherExists) {
     }
 }
 
-function teacherExists($conn) {
+function teacherExists($conn) {  // checks if linked teacher account exists in database
     $stmt = mysqli_stmt_init($conn); 
     $query = "SELECT * FROM teachers WHERE teacherEmail=?";
     if (!mysqli_stmt_prepare($stmt, $query)) {
@@ -49,21 +49,21 @@ function teacherExists($conn) {
         mysqli_stmt_bind_param($stmt, "s", $_POST['teacherEmail']);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);  
-        $numAccounts = count(mysqli_fetch_all($result, MYSQLI_ASSOC));
-        if ($numAccounts > 0) {return true;}
+        $numAccounts = count(mysqli_fetch_all($result, MYSQLI_ASSOC));  // return all matches
+        if ($numAccounts > 0) {return true;}  // return true if teacher exists
         else {return false;}
     }
 }
 
-function validateEmail($email) {
+function validateEmail($email) {  // server side email validation using php
     return preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', $email);
 }
 
-function validateName($name) {
+function validateName($name) {  // name valid if not empty
     return strlen($name) > 0;
 }
 
-function validatePasswords($pass1, $pass2=null) {
+function validatePasswords($pass1, $pass2=null) {  // passwords valid if equal and greater than 8 in length
     if ($pass2!=null) {
         if ($pass1 != $pass2) {
             return false;
@@ -72,19 +72,19 @@ function validatePasswords($pass1, $pass2=null) {
     return strlen($pass1) >= 8;
 }
 
-function validate() {
+function validate($teacherExists) {
     $valid = true;
-    if ($teacherExists) {
+    if ($teacherExists) {  // validates teacher email if entered
         if (!validateEmail($_POST['teacherEmail'])) {
             $valid = false;
         }
     }
     if(!(validateName($_POST['firstName']) && validateName($_POST['lastName']) && validateEmail($_POST['email']) && validatePasswords($_POST['password']))) {
-        $valid = false;
+        $valid = false;  // validates all form values at once
     }
 
     if (!$valid) {
-        header("Location: ../register-page.php?error=2");
+        header("Location: ../register-page.php?error=2");  // redirects with error if data invalid
         exit;
     }
     
@@ -105,13 +105,14 @@ if ($_POST['userType'] == "student") {  // constructs sql query for student
     $query = "INSERT INTO teachers(firstName, lastName, teacherEmail, password) VALUES (?, ?, ?, ?)";
 }
 
-$studentQuery = "SELECT * FROM students WHERE studentEmail=?";
+// constructs both queries
+$studentQuery = "SELECT * FROM students WHERE studentEmail=?";  
 $teacherQuery = "SELECT * FROM teachers WHERE teacherEmail=?";
 
 
 validate($teacherExists);
 
-if (!(accountExists($conn, $studentQuery) || accountExists($conn, $teacherQuery))) {
+if (!(accountExists($conn, $studentQuery) || accountExists($conn, $teacherQuery))) {  // checks if account already exists
     addAccount($conn, $query, $teacherExists);
 }else {
     header("Location: ../register-page.php?error=1"); // handle account already existing

@@ -1,6 +1,6 @@
 <?php include("templates/header.php");
 
-if (isset($_SESSION['loggedin'])) {
+if (isset($_SESSION['loggedin'])) { // redirects to index if user already logged in
     header("Location: ../index.php");
 }
 ?>
@@ -11,7 +11,7 @@ if (isset($_SESSION['loggedin'])) {
     <a href="login-page.php" class="account-redirect-link">Already have an account?</a>
 
     <?php 
-    if (isset($_GET['error'])) {
+    if (isset($_GET['error'])) { // displays registration error if returned
         if ($_GET['error'] == 1) {
             echo "<div class='error'>Account already exists</div>";
         }
@@ -22,7 +22,7 @@ if (isset($_SESSION['loggedin'])) {
             echo "<div class='error'>Teacher with that account does not exist</div>";
         };
     }
-    if (isset($_GET['success'])) {
+    if (isset($_GET['success'])) { // displays success message if registration successful
         echo "<div class='error success'>Account created</div>";
     }
     ?>

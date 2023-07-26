@@ -1,38 +1,42 @@
 async function mergeSort(bars, speed) {
     resetBarColor(bars)
-
+    // declare initial variables
     var index=0
     var listOfBars =[]
 
-    for (i=0; i<bars.length; i++) {
+    for (i=0; i<bars.length; i++) { // add all bars as array to 2D array
         listOfBars.push([bars[i]])
     }
 
-    while (listOfBars.length != 1) {
+    while (listOfBars.length != 1) {  // iterates until final merge (2D array length = 1)
         if (index >= listOfBars.length - 1) {
-            index = 0
+            index = 0 // starts at beginning if out of range
         }
         
+        //old list formed from concatenating two lists
         var oldList = listOfBars[index].concat(listOfBars[index+1])
 
+        //newlist formed from merging two lists
         var newList = merge(listOfBars[index], listOfBars[index+1])
 
-        listOfBars.splice(index, 2, newList)
+        listOfBars.splice(index, 2, newList) // replace old lists (2) with new list (1)
 
-        await swapMerge(bars, speed, oldList, newList)
+        await swapMerge(bars, speed, oldList, newList) // swap bars visually
         index++
-        
     }
     resetBarColor(bars)
     bars = listOfBars[0]
     checkAll(bars)
+    // algorithm end
 }
 
 
 function swapMerge(bars, speed, oldList, newList, curIndex=0) {
-    return new Promise(resolve => 
+    return new Promise(resolve => // promise allows async function to halt
         loop = setInterval(() => {
 
+            // obtain old and new index and value of item
+            // move item from its old position to its new position
             var oldIndex = oldList.indexOf(newList[curIndex])
             var difference =  Math.abs(oldIndex-curIndex) 
 
@@ -40,23 +44,24 @@ function swapMerge(bars, speed, oldList, newList, curIndex=0) {
             var oldItem = oldList[curIndex]
 
             resetBarColor(bars)
-            for (i=0;i<newList.length;i++) {
-                newList[i].style.background = "darkBlue"
+            for (i=0;i<newList.length;i++) { // sets color of merge subset blue
+                newList[i].style.background = "blue"
             }
-            newItem.style.background = 'green'
+            newItem.style.background = 'lime' // highlight current selected item
             var value = parseInt(newItem.style.height.slice(0, newItem.style.height.length-2))/20
-            desc("merge", "selectsmallest", undefined, [value, undefined])
+            desc("merge", "selectsmallest", undefined, [value, undefined]) // call descriptions
 
             setTimeout(() => {
-            if (difference!=0) {
+            if (difference!=0) { // move bar if not in same position
+                desc("merge", "movesmallest", undefined, [value, curIndex]) 
 
-                desc("merge", "movesmallest", undefined, [value, curIndex])
-
+                // move bar by updating transform value
+                // smallest item will move left (-ve)
                 var newItemTransformStr = newItem.style.transform
                 var newItemTransformVal = parseInt(newItemTransformStr.replace(/[^0-9-]/g, ""))
                 newItemTransformVal -= 110*difference
                 newItem.style.transform = "translateX("+newItemTransformVal+"%)"
-
+                // item being displaced will move right (+ve)
                 var oldItemTransformStr = oldItem.style.transform
                 var oldItemTransformVal = parseInt(oldItemTransformStr.replace(/[^0-9-]/g, ""))
                 oldItemTransformVal += 110*difference
@@ -66,21 +71,20 @@ function swapMerge(bars, speed, oldList, newList, curIndex=0) {
                 desc("merge", "inplace",)
             }
         
-        
             },1000*speed)
             
-        
+            // swap items in old list to reflect change visually
             var temp = oldList[curIndex]
             oldList[curIndex] = newList[curIndex]
             oldList[oldIndex] = temp
-        
+            
             curIndex++
-            if (curIndex == newList.length) {
+            if (curIndex == newList.length) { // resolve promise once end of list reached
                 resolve()
                 clearInterval(loop)
             }
             
-        }, 1000*speed)
+        }, 2000*speed)
     )
 }
 

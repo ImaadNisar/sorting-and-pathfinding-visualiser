@@ -5,7 +5,7 @@
     <h1>Login to Visualize It</h1>
     <a href="register-page.php" class="account-redirect-link">Don't have an account?</a>
     <?php 
-    if (isset($_GET['error'])) {
+    if (isset($_GET['error'])) { // display errors if error returned
         if ($_GET['error'] == 1) {
             echo "<div class='error'>Account does not exist</div>";
         }

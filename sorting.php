@@ -8,7 +8,7 @@
             <span id="tts-button" onclick='toggleTTS()'></span>
 
             <span class="algorithm-span top-span">
-                <select name="algorithm" id="algorithm">
+                <select name="algorithm" id="algorithm" oninput="initPseudocode()">
                     <option value="Bubble Sort">Bubble Sort</option>
                     <option value="Insertion Sort">Insertion Sort</option>
                     <option value="Merge Sort">Merge Sort</option>
@@ -51,7 +51,12 @@
 </div>
 
 <div class="sorting-right-container">
-    <!-- CARDS GO HERE -->
+    <section class="psuedocode-tile-container">
+        <h1 id="pseudocode-name"></h1>
+        <hr>
+        <div id="pseudocode-container">
+        </div>
+    </section>
 </div>
 
 </main>
