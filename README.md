@@ -1,10 +1,5 @@
 <h1>Sorting and Pathfinding Visualizer</h1>
-A visualisation program for A-Level sorting and pathfinding algorithms
-<br><br>
-Created for my A Level Computer Science NEA 2023
-<br><br>
-Account features won't work for you for now as it requires you to create a db and account in mysql locally. Maybe i'll change it or make the site live one day
-<br><br>
+A visualisation program for popular sorting and pathfinding algorithms
 
 ![1](https://github.com/ImaadNisar/sorting-and-pathfinding-visualiser/assets/62900453/2031a596-0ea4-40c5-aeb0-2c384375d507)
 <br><br>
